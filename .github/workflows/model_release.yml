@@ -1,0 +1,11 @@
+name: model_release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder
+        run: echo "model release triggered. Add real steps later."

@@ -1,0 +1,121 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+*.tmp
+
+# === Virtual Environments ===
+.venv/
+env/
+venv/
+
+# === VS Code ===
+.vscode/settings.json
+.vscode/launch.json
+.vscode/*.code-workspace
+
+# === Dev Containers ===
+.devcontainer/devcontainer.json
+
+# === Jupyter Notebooks Checkpoints ===
+.ipynb_checkpoints/
+
+# === DVC ===
+*.dvc
+!.dvc/config
+.dvc/cache/
+.dvc/tmp/
+data/raw/
+data/interim/
+data/processed/
+data/**/.gitignore
+
+# === Airflow ===
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/unittests.cfg
+airflow/logs/
+airflow/plugins/__pycache__/
+airflow/.env
+airflow/.airflowenv
+airflow/__pycache__/
+
+# === Terraform ===
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+
+# === Docker ===
+**/__pycache__/
+**/.Python
+**/Dockerfile.*
+docker/.dockerignore
+docker-compose.override.yml
+docker-compose.local.yml
+*.dockerfile
+
+# === MLflow Artifacts ===
+mlflow/mlruns/
+mlflow/database/
+mlflow/.env
+mlflow/.mlflowenv
+
+# === Secrets / Env ===
+.env
+.env.*
+.envrc
+*.key
+*.pem
+*.crt
+
+# === Model Artifacts ===
+saved_models/
+*.h5
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.onnx
+
+# === Logs and Reports ===
+*.log
+logs/
+reports/
+evidently_report.html
+*.csv
+
+# === System ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# === IDE ===
+.idea/
+*.iml
+
+# === Tests (Optional) ===
+.coverage
+pytest_cache/
+htmlcov/
+.tox/
+
+# === CI/CD Cache (Optional) ===
+.github/workflows/*.log
+.cache/
+
+# === Demos ===
+demo/data/
+demo/output/
+
+# === GitOps-related ===
+kubernetes/argocd/.credentials/

@@ -1,0 +1,50 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0 # Use a specific, stable version. Check latest on GitHub.
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml # For pyproject.toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: detect-private-key
+      - id: check-added-large-files # Helps catch large files before DVC/LFS is properly used
+        args: [--maxkb=500] # Adjust max file size as needed
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+    rev: v0.12.2
+    hooks:
+      # Run the linter.
+      - id: ruff-check
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
+
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1 # Use a specific, stable version. Check latest on GitHub.
+    hooks:
+      - id: nbstripout
+        args: ['--keep-output-metadata', '{"scrolled": true, "collapsed": true}'] # Optional: keep some metadata if needed
+
+  # Optional: For type checking (can be slow, sometimes better for CI)
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.10.0 # Use a specific, stable version. Check latest on GitHub.
+  #   hooks:
+  #     - id: mypy
+  #       args: [] # Add --ignore-missing-imports or other args as needed
+  #       language: python
+  #       types: [python]
+  #       # It's generally recommended to run mypy on CI, but a subset can be useful here.
+
+  # Optional: For security scanning (can be slow, often better for CI)
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.7.9 # Use a specific, stable version. Check latest on GitHub.
+  #   hooks:
+  #     - id: bandit
+  #       args: [-r, src/, --exclude, tests/, .venv/]
+  #       language: python
+  #       types: [python]

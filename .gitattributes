@@ -1,0 +1,52 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files that should always have LF endings
+*.py text eol=lf
+*.toml text eol=lf
+*.lock text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+
+# Terraform files
+*.tf text eol=lf
+*.tfvars text eol=lf
+
+# Dockerfiles and Docker-related files
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+docker-compose*.yml text eol=lf
+
+# Treat binary files as binary (no line ending conversion)
+*.png binary
+*.jpg binary
+*.zip binary
+# Add other binary file types as needed
+
+# Shell scripts are executable
+*.sh text eol=lf
+*.sh linguist-language=Shell
+*.sh diff=astextplain
+
+# Makefiles
+Makefile text eol=lf
+
+# CSV and TSV files — typically treated as text
+*.csv text eol=lf
+*.tsv text eol=lf
+
+# Ignore line ending conversion for model weights and binary blobs
+*.pkl binary
+*.pt binary
+*.h5 binary
+*.onnx binary
+*.joblib binary
+*.model binary
+# Notebook files (some teams treat as binary to avoid merge issues)
+*.ipynb text eol=lf
