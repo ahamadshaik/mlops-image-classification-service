@@ -9,6 +9,13 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "numpy (>=2.3.1,<3.0.0)"
+    # Add your core project runtime dependencies here as you identify them.
+    # Examples:
+    # "tensorflow>=2.0.0",
+    # "scikit-learn>=1.0.0",
+    # "fastapi>=0.100.0",
+    # "uvicorn[standard]>=0.20.0",
+    # "google-cloud-storage>=2.0.0",
 ]
 
 [tool.poetry]
@@ -17,7 +24,90 @@ packages = [{include = "mlops_image_classification_service", from = "src"}]
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.2.0"
+# Add your development dependencies for linting, formatting, and type checking
+ruff = "^0.1.14" # For linting
+black = "^24.4.2" # For formatting
+mypy = "^1.8.0" # For static type checking
+pytest = "^8.0.0" # Good to have for testing
+# Add any other development-specific dependencies here
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# --- Black Configuration ---
+# Black is an uncompromising code formatter.
+[tool.black]
+line-length = 88 # Standard line length, matches PEP 8 and Ruff's default
+target-version = ['py312'] # Specify the Python version
+include = '\.pyi?$' # Include .py and .pyi (stub) files
+exclude = '''
+/(
+    \.git          # Exclude Git directory
+  | \.hg           # Exclude Mercurial directory
+  | \.mypy_cache   # Exclude Mypy cache
+  | \.pytest_cache # Exclude Pytest cache
+  | \.ruff_cache   # Exclude Ruff cache
+  | \.venv         # Exclude Poetry's virtual environment
+  | \.vscode       # Exclude VS Code specific config files (though usually in .gitignore)
+  | _build         # Common build output directory
+  | build          # Common build output directory
+  | dist           # Distribution directory
+)/
+'''
+
+# --- Ruff Configuration (Linting Only) ---
+# Ruff is an extremely fast Python linter, covering many checks from Flake8, Pylint, isort, etc.
+[tool.ruff]
+target-version = "py312" # Target Python version for Ruff's analysis
+line-length = 88 # Should match Black's line-length for consistency
+
+[tool.ruff.lint]
+# Select the linting rules you want to enable.
+# These categories cover common errors, style, imports, and best practices.
+select = [
+    "E",   # pycodestyle errors
+    "F",   # Pyflakes errors
+    "I",   # isort-style import sorting checks
+    "B",   # Bugbear warnings (potential bugs or problematic patterns)
+    "ANN", # flake8-annotations (type annotation specific checks)
+    "UP",  # pyupgrade (suggestions for modern Python syntax)
+    "N",   # pep8-naming (naming convention checks)
+    # Add more as you learn and need them, e.g., "C4" for comprehensions
+]
+
+# Ignore specific rules globally.
+# E501: Line too long (handled by Black, Ruff would only flag if Black couldn't format it)
+# ANN101, ANN102: Missing type annotation for self/cls in methods (often ignored in classes for conciseness)
+ignore = [
+    "E501",
+    "ANN101",
+    "ANN102",
+    # "N802", # Function name "x" should be lowercase (if you use PascalCase for some funcs)
+    # "N806", # Variable "x" in function should be lowercase (if you use CamelCase for constants)
+]
+
+# Per-file ignores (e.g., ignore certain rules in specific files)
+# per-file-ignores = {"__init__.py": ["F401", "F403"]} # F401: unused imports, F403: from ... import *
+
+# --- Mypy Configuration ---
+# Mypy is a static type checker that ensures your type hints are consistent and correct.
+[tool.mypy]
+python_version = "3.12" # Target Python version for Mypy
+warn_return_any = true # Warn when an untyped function return is used as `Any`
+warn_unused_configs = true # Warn about unused options in the config file
+disallow_untyped_defs = true # All functions must have type hints unless explicitly allowed
+disallow_incomplete_defs = true # Functions with incomplete type hints are disallowed
+check_untyped_defs = true # Check functions that have no type annotations
+no_implicit_optional = true # Force explicit Optional[] where appropriate (e.g., `x: Optional[str]` instead of `x: str | None`)
+strict_equality = true # Warn when comparing types that are always different
+ignore_missing_imports = true # Ignore imports for libraries that don't have type hints
+
+# Examples of per-module settings (adjust as needed)
+# [[tool.mypy.overrides]]
+# module = "tests.*" # Don't check tests for errors
+# ignore_errors = true
+
+# [[tool.mypy.overrides]]
+# module = "some_library_without_stubs" # Ignore missing imports for specific libraries
+# ignore_missing_imports = true

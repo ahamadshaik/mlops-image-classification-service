@@ -8,10 +8,17 @@ repos:
       - id: check-toml # For pyproject.toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: check-case-conflict
       - id: mixed-line-ending
       - id: detect-private-key
       - id: check-added-large-files # Helps catch large files before DVC/LFS is properly used
-        args: [--maxkb=500] # Adjust max file size as needed
+        args: [--maxkb=2048] # Adjust max file size as needed
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0 # Use the version matching your poetry.lock for consistency
+    hooks:
+      - id: black
+        language_version: python3.12 # Ensure Black runs with Python 3.12
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
@@ -19,13 +26,20 @@ repos:
     hooks:
       # Run the linter.
       - id: ruff-check
-        args: [ --fix ]
+        args: [ --fix, --exit-non-zero-on-fix ]
       # Run the formatter.
       - id: ruff-format
 
+  # Python Static Type Checking (Mypy)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.16.1 # Use the version matching your poetry.lock for consistency
+    hooks:
+      - id: mypy
+        args: [--no-warn-no-context, --show-column-numbers] # Adjust args as needed
+        # It will automatically pick up the [tool.mypy] config in pyproject.toml
 
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.7.1 # Use a specific, stable version. Check latest on GitHub.
+    rev: 0.8.1 # Use a specific, stable version. Check latest on GitHub.
     hooks:
       - id: nbstripout
         args: ['--keep-output-metadata', '{"scrolled": true, "collapsed": true}'] # Optional: keep some metadata if needed
