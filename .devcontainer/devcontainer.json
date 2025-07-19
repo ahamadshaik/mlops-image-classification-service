@@ -1,0 +1,71 @@
+{
+  "name": "MLOps Project Dev Container",
+  "build": {
+    "dockerfile": "../docker/training_environment/Dockerfile",
+    "context": ".."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "git.terminalGitEditor": true,
+        "git.editor": "code --wait",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "files.eol": "\n",
+        "files.autoSave": "afterDelay",
+        "editor.renderWhitespace": "all",
+        "editor.rulers": [88, 120],
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.ruff": "explicit",
+          "source.organizeImports.ruff": "explicit"
+        },
+
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.linting.flake8Enabled": false,
+        "python.linting.mypyEnabled": true,
+        "python.linting.ruffEnabled": true,
+        "ruff.configurationPreference": "filesystemFirst",
+        "mypy.runUsingActiveInterpreter": true,
+        "mypy.dmypyEnabled": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "redhat.vscode-yaml",
+        "hashicorp.terraform",
+        "github.vscode-pull-request-github",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "me-dutour-mathieu.vscode-github-actions",
+        "ms-toolsai.vscode-ai",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "postCreateCommand": "poetry install --no-root && poetry run pre-commit install",
+  "remoteUser": "root",
+  "forwardPorts": [5000, 8080, 8000],
+  "portsAttributes": {
+    "5000": {
+      "label": "MLflow UI",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Airflow UI",
+      "onAutoForward": "notify"
+    },
+    "8000": {
+      "label": "FastAPI Service",
+      "onAutoForward": "notify"
+    }
+  }
+}
